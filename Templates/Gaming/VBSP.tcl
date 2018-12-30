@@ -1,3 +1,4 @@
+# By Nate Weaver
 # https://github.com/Wevah/HexFiendTemplates
 
 little_endian
@@ -5,7 +6,7 @@ requires 0 "56 42 53 50" ;# VBSP
 ascii 4 "Signature"
 int32 "BSP File Version"
 
-# 22-25, 49, 50-52 have multiple definitions
+# 22-25, 49, 50-52 have multiple definitions, depending on the file version
 
 array set lumpnames {
 	0	ENTITIES
