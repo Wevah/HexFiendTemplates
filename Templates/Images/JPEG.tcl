@@ -1,3 +1,6 @@
+# By Nate Weaver
+# https://github.com/Wevah/HexFiendTemplates
+
 big_endian
 requires 0 "FF D8 FF"
 hex 4 "Signature"

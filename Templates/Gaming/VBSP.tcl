@@ -1,3 +1,5 @@
+# https://github.com/Wevah/HexFiendTemplates
+
 little_endian
 requires 0 "56 42 53 50" ;# VBSP
 ascii 4 "Signature"
