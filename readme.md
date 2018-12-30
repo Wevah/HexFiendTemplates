@@ -10,9 +10,9 @@ Currently only supports JFIF.
 
 ## Gaming
 
-### VBSP (Valve BSP)
-
--------
-
+### VBSP
+Valve BSP files.
+  
+--------------------------
 © 2018 Nate Weaver (Wevah)  
 https://derailer.org/
