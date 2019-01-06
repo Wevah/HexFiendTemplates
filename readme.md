@@ -1,12 +1,14 @@
 # HexFiend Templates
 
-Custom templates for [HexFiend](https://ridiculousfish.com/hexfiend/) 2.10+.  
-Some templates may require 2.11+.
+Custom templates for [HexFiend](https://ridiculousfish.com/hexfiend/) 2.11+.  
 
 ## Images
 
 ### JPEG
 Currently only supports JFIF.
+
+### TGA
+Should support all six main flavors.
 
 ## Gaming
 
