@@ -151,16 +151,21 @@ proc readFooter {} {
 }
 
 proc humanReadableImageType {imageType} {
-	switch $imageType {
-		1 {return "Uncompressed Color-Mapped"}
-		2 {return "Uncompressed True-Color"}
-		3 {return "Uncompressed Black and White (Unmapped)"}
-		
-		9 {return "RLE Color-Mapped"}
-		10 {return "RLE True-Color"}
-		11 {return "RLE Black and White (Unmapped)"}
-		default {return $imageType}
+	if {$imageType < 0x10} {
+		set colorType [expr {$imageType & 0x07}]
+	
+		switch [expr {$imageType & 0x07}] {
+			1 {set colorType "Color-Mapped"}
+			2 {set colorType "True-Color"}
+			3 {set colorType "Black and White (Unmapped)"}
+		}
+	
+		set compressionType [expr {$imageType & 0x08 ? "RLE" : "Uncompressed"}]
+	
+		return "$colorType, $compressionType"
 	}
+	
+	return $imageType
 }
 
 section "Image Header" {
