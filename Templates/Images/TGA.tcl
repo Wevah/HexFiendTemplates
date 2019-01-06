@@ -134,18 +134,56 @@ proc readExtensionAreaAtOffset {offset} {
 	}
 }
 
+proc readDeveloperDirectoryAtOffset {offset} {
+	goto $offset
+	section "Developer Directory" {
+		set numberOfEntries [uint16 "NumberOfEntries"]
+		#set entries
+		set entries [dict create]
+		
+		section "Entries" {
+			for {set i 0} {$i < $numberOfEntries} {incr $i} {
+				section "Entry [expr {$i + 1}]" {
+					set devTag [uint16 "Tag"]
+					set devOffset [uint32 "Offset"]
+					set devLength [uint32 "Length"]
+					sectionvalue $devTag
+					
+					set devEntry [dict create tag $devTag offset $devOffset length $devLength]
+					dict set entries $1 devEntry
+				}
+			}
+		}
+	}
+	
+	return $entries
+}
+
+proc readDeveloperAreaAtOffset {offset} {
+	section "Developer Area" {
+		set entries [readDeveloperDirectoryAtOffset $offset]
+		dict for {$index, $entry} $entries {
+			goto [dict get $entry offset]
+			bytes [dict get $entry length] [dict get $entry tag]
+		}
+	}
+}
+
 proc readFooter {} {
 	if {[verifyFooter]} {
 		goto -26
 		
 		section "Footer" {
 			set extensionAreaOffset [uint32 "Extension Area Offset"]
-			set developerDirectoryOffset [uint32 "Developer Directory Offset"]
+			set developerAreaOffset [uint32 "Developer Area Offset"]
 			ascii 18 "Signature"
 		}
 
 		if {$extensionAreaOffset != 0} {
 			readExtensionAreaAtOffset $extensionAreaOffset
+		}
+		if {$developerAreaOffset != 0} {
+			readDeveloperAreaAtOffset $developerAreaOffset
 		}
 	}
 }
