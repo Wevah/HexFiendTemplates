@@ -1,5 +1,6 @@
 # By Nate Weaver
 # https://github.com/Wevah/HexFiendTemplates
+# Types: public.jpeg
 
 big_endian
 requires 0 "FF D8 FF"

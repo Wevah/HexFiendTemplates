@@ -1,5 +1,6 @@
 # By Nate Weaver
 # https://github.com/Wevah/HexFiendTemplates
+# Types: com.truevision.tga-image, tga   
 
 set ImageTypeMaskRLE 0x8
 
@@ -237,6 +238,12 @@ section "Image Header" {
 	uint8 "Image Descriptor"
 }
 
+if {$bitsPerPixel % 8 != 0 || $xOrigin != 0 || $yOrigin != 0} {
+	# sanity check
+	requires -1 0
+}
+
+
 if {$idLength > 0} {
 	ascii $idLength "Image ID"
 }
@@ -261,7 +268,12 @@ if {($imageType & $ImageTypeMaskRLE) != 0} {
 	set imageDataLength [expr {$imageWidth * $imageHeight * $bitsPerPixel / 8}]
 }
 
-bytes $imageDataLength "Image Data"
+# Sanity Check
+if {$imageDataLength < 0x40000000} {
+	bytes $imageDataLength "Image Data"
+} else {
+	entry "Image Data" "Calculated length > 1 GB; Probably not a TGA file!"
+}
 
 readFooter
 
