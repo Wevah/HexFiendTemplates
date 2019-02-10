@@ -1,6 +1,7 @@
-# HexFiend Templates
+# Hex Fiend Templates
 
-Custom templates for [HexFiend](https://ridiculousfish.com/hexfiend/) 2.11+.  
+Custom templates for [Hex Fiend](https://ridiculousfish.com/hexfiend/) 2.11+.  
+Includes `types:` comment lines used by my [template autodetection branch](https://github.com/Wevah/HexFiend/tree/template-autodetection).
 
 ## Images
 
@@ -16,5 +17,5 @@ Should support all six main flavors.
 Valve BSP files. (Incomplete.)
   
 --------------------------
-© 2018 Nate Weaver (Wevah)  
+© 2018Ð2019 Nate Weaver (Wevah)  
 https://derailer.org/
