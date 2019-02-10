@@ -1,5 +1,7 @@
 # By Nate Weaver
 # https://github.com/Wevah/HexFiendTemplates
+#
+# types: vtf
 
 little_endian
 requires 0 "56 42 53 50" ;# VBSP
