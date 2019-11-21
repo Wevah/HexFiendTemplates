@@ -2,6 +2,8 @@
 # https://github.com/Wevah/HexFiendTemplates
 # Types: ico, cur
 
+requires 0 "00 00" 
+
 bytes 2 Reserved
 # 1 for ICO 2 for CUR
 section "Type" {
