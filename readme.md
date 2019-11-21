@@ -11,6 +11,9 @@ Currently only supports JFIF. (Incomplete.)
 ### TGA
 Should support all six main flavors.
 
+### ICO
+Windows ICO and CUR files.
+
 ## Gaming
 
 ### VBSP
