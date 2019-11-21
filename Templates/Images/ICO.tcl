@@ -17,16 +17,18 @@ section "Type" {
 		sectionvalue "$fileType"
 	}
 }
-
  
 set numImages [uint16 "Image count"]
 
 proc dataIsPNGAtOffset {offset} {
 	goto $offset
-	set pngSignature [bytes 8]
+	
+	if {![end]} {
+		set pngSignature [bytes 8]
 		
-	if {$pngSignature == "\x89PNG\r\n\x1a\n"} {
-		return true
+		if {$pngSignature == "\x89PNG\r\n\x1a\n"} {
+			return true
+		}
 	}
 	
 	return false
@@ -35,12 +37,15 @@ proc dataIsPNGAtOffset {offset} {
 proc dimensionsFromPNGDataAtOffset {offset} {
 	if {[dataIsPNGAtOffset $offset]} {
 		move 8
-		big_endian
-		lappend dims [uint32]
-		entry "foo" [lindex $dims 0]
-		lappend dims [uint32]
-		little_endian
-		return $dims
+		
+		if {![end]} {
+			big_endian
+			lappend dims [uint32]
+			entry "foo" [lindex $dims 0]
+			lappend dims [uint32]
+			little_endian
+			return $dims
+		}
 	}
 	
 	return { 0 0 }
@@ -72,20 +77,20 @@ section "Image Entries" {
 		
 			set imageSize [uint32 "Image Size"]
 			set imageOffset [uint32 "Image Offset"]
-			
+ 			
 			if {$width == 0} {
 				set pngDimensions [dimensionsFromPNGDataAtOffset $imageOffset]
 			
 				if {[lindex $pngDimensions 0] != 0} {
-					set dimensions "[lindex $pngDimensions 0] × [lindex $pngDimensions 1], PNG"
+					set label "[lindex $pngDimensions 0] × [lindex $pngDimensions 1], PNG"
 				}
 				
 				goto [expr 6 + ($i + 1) * 16]
 			}
 			
-			sectionvalue $dimensions
+			sectionvalue $label
 
-			lappend imageDataValues [dict create size $imageSize offset $imageOffset dimensions $dimensions]			
+			lappend imageDataValues [dict create size $imageSize offset $imageOffset label $label]			
 		}
 	}
 }
@@ -93,6 +98,9 @@ section "Image Entries" {
 section "Image Data" {
 	foreach imageData $imageDataValues {
 		goto [dict get $imageData offset]
-		bytes [dict get $imageData size] "[incr $i] ([dict get $imageData dimensions])"
+		
+		if {![end]} {
+			bytes [dict get $imageData size] "[incr $i] ([dict get $imageData label])"
+		}
 	}
 }
