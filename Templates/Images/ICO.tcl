@@ -57,9 +57,10 @@ section "Image Entries" {
 			set width [uint8 "Width"]
 			set height [uint8 "Height"]
 			
-			if {$width != 0} {
-				set dimensions "$width × $height"
-			}
+			if {$width == 0} { set width 256 }
+			if {$height == 0} { set height 256 }
+			
+			set label "$width × $height"
 					
 			uint8 "Color count"
 			bytes 1 "Reserved"
